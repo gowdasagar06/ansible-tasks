@@ -1,0 +1,7 @@
+- name: Provision Infrastructure
+  hosts: master
+  become: yes
+  roles:
+    - ec2_instance
+    - rds_instance
+    - web_server

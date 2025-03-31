@@ -1,0 +1,8 @@
+region: "ap-southeast-1"
+instance_type: "t2.micro"
+ami_id: "ami-01938df366ac2d954"
+key_name: "test1"
+security_group_name: "Ansible"
+subnet: "subnet-083ee1fddf2d38191"
+volume_size_gb: 10
+volume_device_name: "/dev/xvda"

@@ -1,0 +1,23 @@
+- name: Create RDS Security Group
+  ec2_group:
+    name: rds-sg
+    description: RDS Security Group
+    region: ap-southeast-1
+    rules:
+      - proto: tcp
+        from_port: 3306
+        to_port: 3306
+        cidr_ip: 0.0.0.0/0
+
+- name: Create RDS Instance
+  rds_instance:
+    db_instance_identifier: mydb
+    engine: mysql
+    db_instance_class: db.t2.micro
+    allocated_storage: 20
+    master_username: admin
+    master_user_password: password123
+    publicly_accessible: true
+    region: ap-south-1
+    vpc_security_group_ids:
+      - "{{ rds_sg.group_id }}"

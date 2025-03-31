@@ -1,0 +1,27 @@
+---
+- name: Install Nginx
+  package:
+    name: nginx
+    state: latest
+
+- name: Start and Enable Nginx
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+
+- name: Download and Configure WordPress
+  unarchive:
+    src: https://wordpress.org/latest.tar.gz
+    dest: /var/www/html/
+    remote_src: yes
+
+- name: Set up WordPress Config
+  template:
+    src: wp-config-sample.php.j2
+    dest: /var/www/html/wordpress/wp-config.php
+
+- name: Restart Nginx
+  service:
+    name: nginx
+    state: restarted
