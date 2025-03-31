@@ -2,12 +2,13 @@
   ec2_group:
     name: rds-sg
     description: RDS Security Group
-    region: ap-southeast-1
+    region: "{{ region }}"
     rules:
       - proto: tcp
         from_port: 3306
         to_port: 3306
         cidr_ip: 0.0.0.0/0
+  register: rds_sg
 
 - name: Create RDS Instance
   rds_instance:
@@ -15,9 +16,16 @@
     engine: mysql
     db_instance_class: db.t2.micro
     allocated_storage: 20
-    master_username: admin
-    master_user_password: password123
+    master_username: "{{ master_username }}"
+    master_user_password: "{{ master_user_password }}"
     publicly_accessible: true
-    region: ap-south-1
+    region: "{{ region }}"
     vpc_security_group_ids:
       - "{{ rds_sg.group_id }}"
+  register: rds_info
+
+- name: Set fact (set RDS info to use in other plays)
+  set_fact:
+    global_rds_info_user: "{{ rds_info.master_username }}"
+    global_rds_info_host: "{{ rds_info.endpoint.address }}"
+    cacheable: yes

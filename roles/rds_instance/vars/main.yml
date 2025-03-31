@@ -1,0 +1,5 @@
+region: "ap-southeast-1"
+master_username: "admin"
+master_user_password: "password123"
+
+
