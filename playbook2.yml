@@ -1,9 +1,8 @@
 - name: Provision Infrastructure
-  hosts: worker
+  hosts: web
   become: yes
   roles:
-    - ec2_instance
-    - rds_instance
+    - web_server
   environment:
     AWS_ACCESS_KEY_ID: "{{ aws_access_key }}"
     AWS_SECRET_ACCESS_KEY: "{{ aws_secret_key }}"

@@ -14,18 +14,14 @@
   rds_instance:
     db_instance_identifier: mydb
     engine: mysql
-    db_instance_class: db.t2.micro
+    db_instance_class: db.t3.micro
     allocated_storage: 20
     master_username: "{{ master_username }}"
     master_user_password: "{{ master_user_password }}"
+    db_name: "{{ db_name }}" 
     publicly_accessible: true
     region: "{{ region }}"
     vpc_security_group_ids:
       - "{{ rds_sg.group_id }}"
   register: rds_info
 
-- name: Set fact (set RDS info to use in other plays)
-  set_fact:
-    global_rds_info_user: "{{ rds_info.master_username }}"
-    global_rds_info_host: "{{ rds_info.endpoint.address }}"
-    cacheable: yes
